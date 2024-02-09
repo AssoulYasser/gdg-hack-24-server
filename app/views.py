@@ -48,3 +48,12 @@ def start_event(request):
         return Response(status=200)
     print(serializer.errors)
     return Response(status=400)
+
+@api_view(['POST'])
+def affect_mentors(request):
+    data = request.data
+    serializer = MentorSerializer(data=data, many=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=200)
+    return Response(status=400)
