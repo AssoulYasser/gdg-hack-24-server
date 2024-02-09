@@ -53,6 +53,12 @@ class Event(models.Model):
     judge_password = models.CharField(max_length=256)
     created = models.DateTimeField(auto_now_add=True)
 
+class Registeration(models.Model):
+    motivation_letter = models.TextField()
+    event = models.ForeignKey(Event, related_name='registeration', on_delete=models.PROTECT)
+    profile = models.ForeignKey(Profile, related_name='registeration', on_delete=models.PROTECT)
+    occupation = models.ForeignKey(Occupation, related_name='registeration', on_delete=models.PROTECT)
+
 class Challenges(models.Model):
     event = models.ForeignKey(Event, related_name='challenges', on_delete=models.PROTECT)
     name = models.CharField(max_length=20)
@@ -68,6 +74,9 @@ class Judge(models.Model):
     profile = models.ForeignKey(Profile, related_name='judge', on_delete=models.PROTECT)
     event = models.ForeignKey(Event, related_name='judge', on_delete=models.PROTECT)
     occupation = models.ForeignKey(Occupation, related_name='judge', on_delete=models.PROTECT)
+
+    class Meta:
+        unique_together = ('profile', 'event')
 
 class JudgeEventFeedback(models.Model):
     event_Feedback = models.ForeignKey(Event, related_name='judge_feedback_to_event', on_delete=models.PROTECT)

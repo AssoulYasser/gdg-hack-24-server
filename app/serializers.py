@@ -26,6 +26,11 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
+class RegisterationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Registeration
+        fields = '__all__'
+
 class MentorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mentor

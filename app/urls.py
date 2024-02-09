@@ -6,6 +6,7 @@ urlpatterns = [
     path('sign-in/', sign_in),
     path('admin/add-occupation/', add_occupation),
     path('admin/start-event/', start_event),
+    path('register/', event_registration),
     path('admin/affect-mentors/', affect_mentors),
     path('admin/affect-judge/', affect_judge),
 ]
