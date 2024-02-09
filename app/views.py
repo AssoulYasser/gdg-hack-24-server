@@ -66,6 +66,16 @@ def start_event(request):
     return Response(status=400)
 
 @api_view(['POST'])
+def set_agenda_activities(request):
+    data = request.data
+    serializer = AgendaSerializer(data=data, many=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=200)
+    print(serializer.errors)
+    return Response(status=400)
+
+@api_view(['POST'])
 def team_registration(request):
     data = request.data
     serializer = TeamRegistrationSerializer(data=data)

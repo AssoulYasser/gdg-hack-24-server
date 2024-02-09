@@ -26,6 +26,11 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
+class AgendaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agenda
+        fields = '__all__'
+
 class TeamRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamRegistration

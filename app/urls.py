@@ -6,6 +6,7 @@ urlpatterns = [
     path('sign-in/', sign_in),
     path('admin/add-occupation/', add_occupation),
     path('admin/start-event/', start_event),
+    path('agenda/', set_agenda_activities),
     path('team/register/', team_registration),
     path('participant/register/', participant_registration),
     path('admin/accept-team/', accept_team),

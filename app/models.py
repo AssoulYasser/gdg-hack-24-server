@@ -73,6 +73,14 @@ class Challenges(models.Model):
     description = models.TextField()
     number_of_outputs = models.PositiveSmallIntegerField()
 
+class Agenda(models.Model):
+    event = models.ForeignKey(Event, related_name='agenda', on_delete=models.PROTECT)
+    date_time = models.DateTimeField()
+    activity = models.CharField(max_length=20)
+
+    class Meta:
+        unique_together = ('event', 'date_time')
+
 class Mentor(models.Model):
     profile = models.ForeignKey(Profile, related_name='mentor', on_delete=models.PROTECT)
     event = models.ForeignKey(Event, related_name='mentor', on_delete=models.PROTECT)
