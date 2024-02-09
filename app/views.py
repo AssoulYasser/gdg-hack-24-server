@@ -4,6 +4,7 @@ from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
+from django.http import QueryDict
 
 @api_view(['POST'])
 def sign_up(request):
@@ -49,14 +50,18 @@ def start_event(request):
     print(serializer.errors)
     return Response(status=400)
 
-def is_user_occupied(dataset):
+def set_users_as_occupied(dataset):
     users = []
+    for data in dataset:
+        users.append(data['profile'].email)
+    
+    Profile.objects.filter(email__in=users).update(is_occupied=True)
+
+def is_user_occupied(dataset):
     for data in dataset:
         if data['profile'].is_occupied:
             return True
-    
-        users.append(data['profile'].email)
-    Profile.objects.filter(email__in=users).update(is_occupied=True)
+    set_users_as_occupied(dataset)
     return False
 
 @api_view(['POST'])
