@@ -42,7 +42,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
         return f'{self.first_name} {self.last_name}'
     
 class Admin(models.Model):
-    profile = models.ForeignKey(Profile, related_name='admin', on_delete=models.PROTECT, primary_key=True)
+    profile = models.OneToOneField(Profile, related_name='admin', on_delete=models.PROTECT, primary_key=True)
     password = models.CharField(max_length=256)
 
 class Event(models.Model):
@@ -118,8 +118,8 @@ class OutputResult(models.Model):
     comment = models.TextField()
 
 class TotalResult(models.Model):
-    team = models.ForeignKey(Team, related_name='total_result', on_delete=models.PROTECT, primary_key=True)
+    team = models.OneToOneField(Team, related_name='total_result', on_delete=models.PROTECT)
     rate = models.PositiveSmallIntegerField()
 
 class Winner(models.Model):
-    team = models.ForeignKey(Team, related_name='winner', on_delete=models.PROTECT, primary_key=True)
+    team = models.OneToOneField(Team, related_name='winner', on_delete=models.PROTECT)

@@ -6,12 +6,12 @@ class ProfileManager(BaseUserManager):
 
     def check_data(self, **extra_fields):
         from . import models
-        for field in models.User.REQUIRED_FIELDS:
+        for field in models.Profile.REQUIRED_FIELDS:
             if field not in extra_fields:
                 raise Exception(f'FIELD {field} IS NOT SATISFIED')
             
     def validate_password(self, password):
-        pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$"
         if not re.match(pattern, password):
             raise Exception(f"Password error: \n# At least 8 characters"+
                             "Contains at least one uppercase letter\n"+
@@ -23,12 +23,12 @@ class ProfileManager(BaseUserManager):
         self.check_data(**extra_fields)
         email = self.normalize_email(extra_fields['email'])
         password = extra_fields['password']
-        self.validate_password(password)
+        # self.validate_password(password)
         extra_fields.pop('email')
         extra_fields.pop('password')
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user = user.save()
+        user.save()
         return user
     
     def create_superuser(self, **extra_fields):
