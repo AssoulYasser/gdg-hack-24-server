@@ -49,11 +49,23 @@ def start_event(request):
     print(serializer.errors)
     return Response(status=400)
 
+def is_user_occupied(dataset):
+    users = []
+    for data in dataset:
+        if data['profile'].is_occupied:
+            return True
+    
+        users.append(data['profile'].email)
+    Profile.objects.filter(email__in=users).update(is_occupied=True)
+    return False
+
 @api_view(['POST'])
 def affect_mentors(request):
     data = request.data
     serializer = MentorSerializer(data=data, many=True)
     if serializer.is_valid():
+        if is_user_occupied(serializer.validated_data):
+            return Response(status=409)
         serializer.save()
         return Response(status=200)
     return Response(status=400)
@@ -63,6 +75,8 @@ def affect_judge(request):
     data = request.data
     serializer = JudgeSerializer(data=data, many=True)
     if serializer.is_valid():
+        if is_user_occupied(serializer.validated_data):
+            return Response(status=409)
         serializer.save()
         return Response(status=200)
     return Response(status=400)

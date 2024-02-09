@@ -28,6 +28,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     discord_id = models.CharField(max_length=32, unique=True, null=True, blank=True)
     phone_number = models.CharField(max_length=10, unique=True)
     created = models.DateTimeField(auto_now_add=True)
+    is_occupied = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
@@ -36,9 +37,6 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     objects = ProfileManager()
 
     def __str__(self):
-        return self.username + ': ' + str(self.get_full_name())
-
-    def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
     
 class Admin(models.Model):
@@ -85,7 +83,6 @@ class Team(models.Model):
 
 class Participant(models.Model):
     profile = models.ForeignKey(Profile, related_name='participant', on_delete=models.PROTECT)
-    event = models.ForeignKey(Event, related_name='participant', on_delete=models.PROTECT)
     team = models.ForeignKey(Team, related_name='participant', on_delete=models.PROTECT)
 
 class ParticipantMentorFeedback(models.Model):
