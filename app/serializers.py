@@ -16,6 +16,11 @@ class SignInSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(max_length=16)
 
+class OccupationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Occupation
+        fields = '__all__'
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event

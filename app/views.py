@@ -15,7 +15,7 @@ def sign_up(request):
     print(serializer.errors)
     return Response(status=400)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def sign_in(request):
     data = request.data
     serializer = SignInSerializer(data=data)
@@ -28,6 +28,15 @@ def sign_in(request):
             serializer = SignUpSerializer(instance=profile)
             return Response(status=200, data=serializer.data)
     print(serializer.errors)
+    return Response(status=400)
+
+@api_view(['POST'])
+def add_occupation(request):
+    data = request.data
+    serializer = OccupationSerializer(data=data, many=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=200)
     return Response(status=400)
 
 @api_view(['POST'])
