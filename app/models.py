@@ -70,7 +70,6 @@ class Judge(models.Model):
     profile = models.ForeignKey(Profile, related_name='judge', on_delete=models.PROTECT)
     event = models.ForeignKey(Event, related_name='judge', on_delete=models.PROTECT)
     occupation = models.ForeignKey(Occupation, related_name='judge', on_delete=models.PROTECT)
-    event_Feedback = models.ForeignKey(Feedback, related_name='judge', on_delete=models.PROTECT)
 
 class JudgeEventFeedback(models.Model):
     event_Feedback = models.ForeignKey(Event, related_name='judge_feedback_to_event', on_delete=models.PROTECT)
@@ -118,8 +117,8 @@ class OutputResult(models.Model):
     comment = models.TextField()
 
 class TotalResult(models.Model):
-    team = models.OneToOneField(Team, related_name='total_result', on_delete=models.PROTECT)
+    team = models.OneToOneField(Team, related_name='total_result', on_delete=models.PROTECT, primary_key=True)
     rate = models.PositiveSmallIntegerField()
 
 class Winner(models.Model):
-    team = models.OneToOneField(Team, related_name='winner', on_delete=models.PROTECT)
+    team = models.OneToOneField(Team, related_name='winner', on_delete=models.PROTECT, primary_key=True)

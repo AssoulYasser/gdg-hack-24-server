@@ -30,3 +30,8 @@ class MentorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mentor
         fields = '__all__'
+
+class JudgeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Judge
+        fields = '__all__'

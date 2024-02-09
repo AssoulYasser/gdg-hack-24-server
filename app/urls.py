@@ -7,4 +7,5 @@ urlpatterns = [
     path('admin/add-occupation/', add_occupation),
     path('admin/start-event/', start_event),
     path('admin/affect-mentors/', affect_mentors),
+    path('admin/affect-judge/', affect_judge),
 ]

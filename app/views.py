@@ -57,3 +57,12 @@ def affect_mentors(request):
         serializer.save()
         return Response(status=200)
     return Response(status=400)
+
+@api_view(['POST'])
+def affect_judge(request):
+    data = request.data
+    serializer = JudgeSerializer(data=data, many=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=200)
+    return Response(status=400)
