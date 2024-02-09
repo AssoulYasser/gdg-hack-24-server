@@ -26,9 +26,19 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
-class RegisterationSerializer(serializers.ModelSerializer):
+class TeamRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Registeration
+        model = TeamRegistration
+        fields = '__all__'
+
+class TeamAcceptanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TeamRegistration
+        fields = ['id']
+
+class ParticipantRegisterationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ParticipantRegistration
         fields = '__all__'
 
 class MentorSerializer(serializers.ModelSerializer):
@@ -39,4 +49,14 @@ class MentorSerializer(serializers.ModelSerializer):
 class JudgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Judge
+        fields = '__all__'
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = '__all__'
+
+class ParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
         fields = '__all__'

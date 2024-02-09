@@ -4,6 +4,7 @@ from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
+from django.http import QueryDict
 
 def set_users_as_occupied(dataset):
     users = []
@@ -65,15 +66,53 @@ def start_event(request):
     return Response(status=400)
 
 @api_view(['POST'])
-def event_registration(request):
+def team_registration(request):
     data = request.data
-    serializer = RegisterationSerializer(data=data)
+    serializer = TeamRegistrationSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=200, data=serializer.validated_data)
+    return Response(status=400)
+
+@api_view(['POST'])
+def participant_registration(request):
+    data = request.data
+    serializer = ParticipantRegisterationSerializer(data=data)
     if serializer.is_valid():
         if serializer.validated_data['profile'].is_occupied:
             return Response(status=409)
         serializer.save()
         return Response(status=200)
     return Response(status=400)
+
+@api_view(['POST'])
+def accept_team(request):
+    data = request.data
+    
+    if 'ids' not in data:
+        return Response(status=400)
+    
+    teams = data['ids']
+
+    teams = TeamRegistration.objects.filter(id__in=teams)
+    
+    for team in teams:
+        team_participants = ParticipantRegistration.objects.filter(team=team)
+
+        team_instance = Team()
+        team_instance.event = team.event
+        team_instance.name = team.name
+
+        team_instance.save()
+
+        for participant in team_participants:
+            participant_instance = Participant()
+            participant_instance.profile = participant.profile
+            participant_instance.team = team_instance
+
+            participant_instance.save()
+
+    return Response(status=200)
 
 @api_view(['POST'])
 def affect_mentors(request):

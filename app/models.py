@@ -53,11 +53,19 @@ class Event(models.Model):
     judge_password = models.CharField(max_length=256)
     created = models.DateTimeField(auto_now_add=True)
 
-class Registeration(models.Model):
+class TeamRegistration(models.Model):
+    event = models.ForeignKey(Event, related_name='team_registration', on_delete=models.PROTECT)
+    name = models.CharField(max_length=20)
+    number_of_team = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        unique_together = ('event', 'name')
+
+class ParticipantRegistration(models.Model):
     motivation_letter = models.TextField()
-    event = models.ForeignKey(Event, related_name='registeration', on_delete=models.PROTECT)
-    profile = models.ForeignKey(Profile, related_name='registeration', on_delete=models.PROTECT)
-    occupation = models.ForeignKey(Occupation, related_name='registeration', on_delete=models.PROTECT)
+    profile = models.ForeignKey(Profile, related_name='registration', on_delete=models.PROTECT)
+    team = models.ForeignKey(TeamRegistration, related_name='registration', on_delete=models.PROTECT)
+    occupation = models.ForeignKey(Occupation, related_name='registration', on_delete=models.PROTECT)
 
 class Challenges(models.Model):
     event = models.ForeignKey(Event, related_name='challenges', on_delete=models.PROTECT)
