@@ -39,7 +39,7 @@ def sign_in(request):
         try:
             profile = Profile.objects.get(email=serializer.validated_data['email'])
         except:
-            return Response(status=4004)
+            return Response(status=404)
         if check_password(serializer.validated_data['password'], profile.password):
             serializer = SignUpSerializer(instance=profile)
             return Response(status=200, data=serializer.data)
@@ -50,6 +50,15 @@ def sign_in(request):
 def add_occupation(request):
     data = request.data
     serializer = OccupationSerializer(data=data, many=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=200)
+    return Response(status=400)
+
+@api_view(['POST'])
+def set_deliverables(request):
+    data = request.data
+    serializer = DeliverablesSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
         return Response(status=200)
@@ -81,6 +90,15 @@ def set_challenges(request):
     serializer = ChallengesSerializer(data=data, many=True)
     if serializer.is_valid():
         serializers.save()
+        return Response(status=200)
+    return Response(status=400)
+
+@api_view(['POST'])
+def set_outputs(request):
+    data = request.data
+    serializer = OutputSerializer(data=data, many=True)
+    if serializer.is_valid():
+        serializer.save()
         return Response(status=200)
     return Response(status=400)
 
@@ -212,3 +230,13 @@ def grant_session_to_participants(request):
         session.grant_to_participants = False
     session.save()
     return Response(status=200)
+
+@api_view(['POST'])
+def submissions(request):
+    data = request.data
+    serializer = SubmissionSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=200)
+    print(serializer.errors)
+    return Response(status=400)

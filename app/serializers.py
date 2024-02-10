@@ -21,6 +21,11 @@ class OccupationSerializer(serializers.ModelSerializer):
         model = Occupation
         fields = '__all__'
 
+class DeliverablesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Deliverables
+        fields = '__all__'
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
@@ -34,6 +39,11 @@ class AgendaSerializer(serializers.ModelSerializer):
 class ChallengesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenges
+        fields = '__all__'
+
+class OutputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Outputs
         fields = '__all__'
 
 class TeamRegistrationSerializer(serializers.ModelSerializer):
@@ -85,3 +95,8 @@ class WebsiteSessionSerializer(serializers.ModelSerializer):
                 'validators': []
             }
         }
+
+class SubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Submission
+        fields = '__all__'
