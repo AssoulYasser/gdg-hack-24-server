@@ -49,7 +49,6 @@ class Event(models.Model):
     end_date_time = models.DateTimeField()
     submissions_deadline = models.DateTimeField()
     leader = models.ForeignKey(Profile, related_name='event', on_delete=models.PROTECT)
-    judge_password = models.CharField(max_length=256)
     created = models.DateTimeField(auto_now_add=True)
 
 class TeamRegistration(models.Model):
