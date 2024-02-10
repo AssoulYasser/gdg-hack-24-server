@@ -31,6 +31,11 @@ class AgendaSerializer(serializers.ModelSerializer):
         model = Agenda
         fields = '__all__'
 
+class ChallengesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Challenges
+        fields = '__all__'
+
 class TeamRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamRegistration
@@ -64,4 +69,9 @@ class TeamSerializer(serializers.ModelSerializer):
 class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
+        fields = '__all__'
+
+class RequestMentorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RequestMentor
         fields = '__all__'

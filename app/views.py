@@ -76,6 +76,15 @@ def set_agenda_activities(request):
     return Response(status=400)
 
 @api_view(['POST'])
+def set_challenges(request):
+    data = request.data
+    serializer = ChallengesSerializer(data=data, many=True)
+    if serializer.is_valid():
+        serializers.save()
+        return Response(status=200)
+    return Response(status=400)
+
+@api_view(['POST'])
 def team_registration(request):
     data = request.data
     serializer = TeamRegistrationSerializer(data=data)
@@ -145,3 +154,22 @@ def affect_judge(request):
         serializer.save()
         return Response(status=200)
     return Response(status=400)
+
+@api_view(['POST'])
+def request_mentor(request):
+    data = request.data
+    serializer = RequestMentorSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response()
+
+@api_view(['GET'])
+def get_mentoring_requests(request, pk):
+    try:
+        mentor = Mentor.objects.get(id=pk)
+    except:
+        return Response(status=404)
+    
+    requests = RequestMentor.objects.filter(mentor=mentor)
+    serializer = RequestMentorSerializer(requests, many=True)
+    return Response(status=200, data=serializer.data)

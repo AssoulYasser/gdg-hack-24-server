@@ -41,7 +41,6 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     
 class Admin(models.Model):
     profile = models.OneToOneField(Profile, related_name='admin', on_delete=models.PROTECT, primary_key=True)
-    password = models.CharField(max_length=256)
 
 class Event(models.Model):
     id = models.CharField(max_length=20, primary_key=True)
@@ -118,6 +117,11 @@ class ParticipantMentorFeedback(models.Model):
 class ParticipantEventFeedback(models.Model):
     event_Feedback = models.ForeignKey(Event, related_name='participant_feedback_to_event', on_delete=models.PROTECT)
     Feedback = models.ForeignKey(Feedback, related_name='participant_feedback_to_event', on_delete=models.PROTECT)
+
+class RequestMentor(models.Model):
+    team = models.ForeignKey(Team, related_name='request_mentor', on_delete=models.PROTECT)
+    mentor = models.ForeignKey(Mentor, related_name='request_mentor', on_delete=models.PROTECT)
+    requested = models.DateTimeField(auto_now_add=True)
 
 class Outputs(models.Model):
     coefficient = models.PositiveSmallIntegerField(default=1)
