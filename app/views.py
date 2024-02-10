@@ -173,3 +173,42 @@ def get_mentoring_requests(request, pk):
     requests = RequestMentor.objects.filter(mentor=mentor)
     serializer = RequestMentorSerializer(requests, many=True)
     return Response(status=200, data=serializer.data)
+
+@api_view(['PUT', 'DELETE'])
+def grant_session_to_judge(request):
+    data = request.data
+    serializer = WebsiteSessionSerializer(data=data)
+    if not serializer.is_valid():
+        print()
+        return Response(status=400)
+    
+    try:
+        session = WebsiteSession.objects.get(event=serializer.validated_data['event'])
+    except:
+        session = WebsiteSession()
+        session.event = serializer.validated_data['event']
+    if request.method == 'PUT':
+        session.grant_to_judge = True
+    elif request.method == 'DELETE':
+        session.grant_to_judge = False
+    session.save()
+    return Response(status=200)
+
+@api_view(['PUT', 'DELETE'])
+def grant_session_to_participants(request):
+    data = request.data
+    serializer = WebsiteSessionSerializer(data=data)
+    if not serializer.is_valid():
+        return Response(status=400)
+    
+    try:
+        session = WebsiteSession.objects.get(event=serializer.validated_data['event'])
+    except:
+        session = WebsiteSession()
+        session.event = serializer.validated_data['event']
+    if request.method == 'PUT':
+        session.grant_to_participants = True
+    elif request.method == 'DELETE':
+        session.grant_to_participants = False
+    session.save()
+    return Response(status=200)

@@ -15,4 +15,6 @@ urlpatterns = [
     path('admin/affect-judge/', affect_judge),
     path('team/request-mentor/', request_mentor),
     path('team/get-mentoring-requests/<str:pk>/', get_mentoring_requests),
+    path('admin/grant-session-to-judge/', grant_session_to_judge),
+    path('admin/grant-session-to-participants/', grant_session_to_participants),
 ]

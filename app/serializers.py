@@ -75,3 +75,13 @@ class RequestMentorSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestMentor
         fields = '__all__'
+
+class WebsiteSessionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WebsiteSession
+        fields = ['event']
+        extra_kwargs = {
+            'event': {
+                'validators': []
+            }
+        }

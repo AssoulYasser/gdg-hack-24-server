@@ -123,6 +123,11 @@ class RequestMentor(models.Model):
     mentor = models.ForeignKey(Mentor, related_name='request_mentor', on_delete=models.PROTECT)
     requested = models.DateTimeField(auto_now_add=True)
 
+class WebsiteSession(models.Model):
+    event = models.OneToOneField(Event, related_name='website_session', on_delete=models.PROTECT, primary_key=True)
+    grant_to_judge = models.BooleanField(default=False)
+    grant_to_participants = models.BooleanField(default=False)
+
 class Outputs(models.Model):
     coefficient = models.PositiveSmallIntegerField(default=1)
     event = models.ForeignKey(Event, related_name='outputs', on_delete=models.PROTECT)
